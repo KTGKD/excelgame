@@ -3,15 +3,65 @@ Declare PtrSafe Function GetAsyncKeyState Lib "user32" (ByVal vKey As Long) As I
 Sub JumpButton_Click()
     ' Initialize the game
     Application.DisplayAlerts = False
-    Dim Player As Shape
-    Set Player = ActiveSheet.Shapes.AddShape(msoShapeRectangle, 10, 10, 50, 50)
-    Player.Fill.ForeColor.RGB = RGB(255, 0, 0)
-    Dim Wall1 As Shape
-    Set Wall1 = ActiveSheet.Shapes.AddShape(msoShapeRectangle, 100, 100, 50, 150)
-    Wall1.Fill.ForeColor.RGB = RGB(0, 255, 0)
-    Dim Wall2 As Shape
-    Set Wall2 = ActiveSheet.Shapes.AddShape(msoShapeRectangle, 200, 200, 50, 100)
-    Wall2.Fill.ForeColor.RGB = RGB(0, 255, 0)
+    ' Clear score cell
+    Cells(1, 1).ClearContents
+    
+    Dim Player As Shape, Wall1 As Shape, Wall2 As Shape
+    
+    ' Check if shapes exist and get reference
+    On Error Resume Next
+    Set Player = ActiveSheet.Shapes("GamePlayer")
+    Set Wall1 = ActiveSheet.Shapes("GameWall1")
+    Set Wall2 = ActiveSheet.Shapes("GameWall2")
+    On Error GoTo 0
+    
+    ' Reset or create Player
+    If Player Is Nothing Then
+        Set Player = ActiveSheet.Shapes.AddShape(msoShapeRectangle, 10, 10, 50, 50)
+        Player.Name = "GamePlayer"
+        Player.Fill.ForeColor.RGB = RGB(255, 0, 0)
+    Else
+        Player.Left = 10
+        Player.Top = 10
+        Player.Width = 50
+        Player.Height = 50
+        Player.Fill.ForeColor.RGB = RGB(255, 0, 0)
+    End If
+    
+    ' Reset or create Wall1
+    If Wall1 Is Nothing Then
+        Set Wall1 = ActiveSheet.Shapes.AddShape(msoShapeRectangle, 100, 100, 50, 150)
+        Wall1.Name = "GameWall1"
+        Wall1.Fill.ForeColor.RGB = RGB(0, 255, 0)
+    Else
+        Wall1.Left = 100
+        Wall1.Top = 100
+        Wall1.Width = 50
+        Wall1.Height = 150
+        Wall1.Fill.ForeColor.RGB = RGB(0, 255, 0)
+    End If
+    
+    ' Reset or create Wall2
+    If Wall2 Is Nothing Then
+        Set Wall2 = ActiveSheet.Shapes.AddShape(msoShapeRectangle, 200, 200, 50, 100)
+        Wall2.Name = "GameWall2"
+        Wall2.Fill.ForeColor.RGB = RGB(0, 255, 0)
+    Else
+        Wall2.Left = 200
+        Wall2.Top = 200
+        Wall2.Width = 50
+        Wall2.Height = 100
+        Wall2.Fill.ForeColor.RGB = RGB(0, 255, 0)
+    End If
+    '   Dim Player As Shape
+    '   Set Player = ActiveSheet.Shapes.AddShape(msoShapeRectangle, 10, 10, 50, 50)
+    '   Player.Fill.ForeColor.RGB = RGB(255, 0, 0)
+    '   Dim Wall1 As Shape
+    '   Set Wall1 = ActiveSheet.Shapes.AddShape(msoShapeRectangle, 100, 100, 50, 150)
+    '   Wall1.Fill.ForeColor.RGB = RGB(0, 255, 0)
+    '   Dim Wall2 As Shape
+    '   Set Wall2 = ActiveSheet.Shapes.AddShape(msoShapeRectangle, 200, 200, 50, 100)
+    '   Wall2.Fill.ForeColor.RGB = RGB(0, 255, 0)
     Dim GameOver As Boolean
     Dim speed As Integer
     Dim HighScore As Integer
@@ -27,6 +77,7 @@ Sub JumpButton_Click()
         PlayerTop = Player.Top
         Dim PlayerBottom As Integer
         PlayerBottom = Player.Top + Player.Height
+        '   "adding is actually going down & subtracting is off"
         Dim Wall1Top As Integer
         Wall1Top = Wall1.Top
         Dim Wall1Bottom As Integer
@@ -37,21 +88,21 @@ Sub JumpButton_Click()
         Wall2Bottom = Wall2.Top + Wall2.Height
         Cells(1, 1) = HighScore
         ' Check for collision with walls
-If Player.Left + Player.Width >= Wall1.Left And Player.Left <= Wall1.Left + Wall1.Width And Player.Top + Player.Height >= Wall1.Top And Player.Top <= Wall1.Top + Wall1.Height Then
-    GameOver = True
-    MsgBox "Game Over!"
-    Exit Sub
-End If
-If Player.Left + Player.Width >= Wall2.Left And Player.Left <= Wall2.Left + Wall2.Width And Player.Top + Player.Height >= Wall2.Top And Player.Top <= Wall2.Top + Wall2.Height Then
-    GameOver = True
-    MsgBox "Game Over!"
-    Exit Sub
-End If
+        If Player.Left + Player.Width >= Wall1.Left And Player.Left <= Wall1.Left + Wall1.Width And Player.Top + Player.Height >= Wall1.Top And Player.Top <= Wall1.Top + Wall1.Height Then
+            GameOver = True
+            MsgBox "Game Over!"
+            Exit Sub
+        End If
+        If Player.Left + Player.Width >= Wall2.Left And Player.Left <= Wall2.Left + Wall2.Width And Player.Top + Player.Height >= Wall2.Top And Player.Top <= Wall2.Top + Wall2.Height Then
+            GameOver = True
+            MsgBox "Game Over!"
+            Exit Sub
+        End If
 
         ' Move the walls
         Wall1.Left = Wall1.Left - (0.1 + speed)
         Wall2.Left = Wall2.Left - (0.1 + speed)
-        
+        '   "if you want to you can add some randomness here others Rnd functions in VBA"(' "If you want, you can add some randomness here using other Rnd functions in VBA")
         If Wall1.Left < Player.Left Then
             Wall1.Left = Player.Left + 800
             Wall1.Top = Player.Top - 3
@@ -65,7 +116,7 @@ End If
             HighScore = HighScore + 1
         End If
 
-
+        'Check for Up arrow key press
          If GetAsyncKeyState(38) < 0 Then
             Player.Top = Player.Top - 3
         End If
