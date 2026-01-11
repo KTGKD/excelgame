@@ -12,7 +12,7 @@
 <div align="center">
 
 <!--[![⬇️ Excel 파일 받기](https://img.shields.io/badge/Excel-파일다운로드-0078D4?style=for-the-badge&logo=microsoft-excel&logoColor=white)](https://drive.google.com/uc?export=download&id=여기에GoogleDrive파일ID입력)-->
-[![⬇️ Excel 파일 받기](https://img.shields.io/badge/Excel-파일다운로드-0078D4?style=for-the-badge&logo=microsoft-excel&logoColor=white)](https://drive.google.com/uc?export=download&id=1HfVBJZc5gVbCW8lm0qb1JKjd1lWdlQz0)
+[![⬇️ Excel 파일 받기](https://img.shields.io/badge/Excel-파일다운로드-0078D4?style=for-the-badge&logo=microsoft-excel&logoColor=white)](https://drive.google.com/file/d/1rAAiuYzJXBkW5cTBIQgk4kePYSa6Vewe/view?usp=sharing)
 
 <!--**🔗 파일ID 추출**: `https://drive.google.com/file/d/파일ID/view` → **파일ID** 복사-->
 
